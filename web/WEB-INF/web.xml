@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>MusikServlet</servlet-name>
+        <servlet-class>servlets.MusikServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AlbumServlet</servlet-name>
+        <servlet-class>servlets.AlbumServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>KategoriServlet</servlet-name>
+        <servlet-class>servlets.KategoriServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderStatusServlet</servlet-name>
+        <servlet-class>servlets.OrderStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MusikServlet</servlet-name>
+        <url-pattern>/MusikServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AlbumServlet</servlet-name>
+        <url-pattern>/AlbumServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KategoriServlet</servlet-name>
+        <url-pattern>/KategoriServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderStatusServlet</servlet-name>
+        <url-pattern>/OrderStatusServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
