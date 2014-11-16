@@ -14,37 +14,25 @@ public class MusikView extends View {
     public MusikView(){
        
     }
-
-    @Override
-    protected String getHeader() {
-        setStyleSheet("musicservlet.css");
-        String html = 
-                "<head>\n"+
-                getStyleSheetLine() + "\n" +
-                "</head>\n";
-        return html;
+    
+    public MusikView(String styleSheetPath) {
+        super.setStyleSheetPath(styleSheetPath);
     }
 
     @Override
-    protected String getBody() {
+    public String getHtml() {
         String html = 
-                "<nav>\n" +
-"		<a href=\"../\"><< Back To Index</a>\n" +
-"	</nav>\n" +
-"	<section id=\"content\">\n" +
-"		<table id=\"music\">\n" +
-"			<th>\n" +
-"				Genrer\n" +
-"			</th>\n" +
-"		</table>\n" +
-"	</section>";
+            "   <nav>\n" +
+            "       <a href=\"../\"><< Back To Index</a>\n" +
+            "	</nav>\n" +
+            "	<section id=\"content\">\n" +
+            "       <table id=\"music\">\n" +
+            "           <th>\n" +
+            "               Genrer\n" +
+            "           </th>\n" +
+            "       </table>\n" +
+            "	</section>";
         
-        return html;
-    }
-
-    @Override
-    protected String getFooter() {
-        String html = "<footer>I'm a footer, scratch me, I'm itchy</footer>";
         return html;
     }
     

@@ -5,25 +5,25 @@
  */
 package views;
 
+import java.util.ArrayList;
+import model.Album;
+
 /**
  *
  * @author h11jafva
  */
 public class KategoriView extends View {
-
-    @Override
-    public String getHeader() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    private ArrayList<Album> albums = null;
+    
+    public KategoriView(ArrayList<Album> albums) {
+        this.albums = albums;
     }
 
     @Override
-    public String getBody() {
+    public String getHtml() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public String getFooter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
 }

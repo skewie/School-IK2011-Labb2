@@ -40,6 +40,6 @@
     
     
     <listener>
-        <listener-class>MusicApplicationListener</listener-class>
+        <listener-class>DAL.MusicApplicationListener</listener-class>
     </listener>
 </web-app>

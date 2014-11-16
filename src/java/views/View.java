@@ -5,49 +5,22 @@
  */
 package views;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  *
  * @author h11jafva
  */
 public abstract class View {
     
-    private HashMap<String, ArrayList<Object>> hm; //TODO: Ändra arraylistans mottagande objekt-typ
-    private final String DOCTYPE =  "<!DOCTYPE html>";
-    private String styleSheetFileName = "";
+    public final static String DOCTYPE =  "<!DOCTYPE html>";
+    private String styleSheetPath = null;
     
-    public String getHtml() {
-        return
-                DOCTYPE+"\n"+
-                "<html lang=\"se\">" +
-                getHeader()+"\n"+
-                getBody()+"\n"+
-                getFooter() +
-                "</html>";
+    public abstract String getHtml();
+    
+    public void setStyleSheetPath(String filePath) {
+        this.styleSheetPath = filePath;
     }
     
-    protected abstract String getHeader();
-    
-    protected abstract String getBody();
-    
-    protected abstract String getFooter();
-    
-    public void setStyleSheet(String fileName) {
-        this.styleSheetFileName = fileName;
-    }
-    
-    public String getStyleSheetLine() {
-        return "<link type=\"text/css\" rel=\"stylesheet\" href=\"./styles/"+ this.styleSheetFileName +"\"/"+">";
-    }
-    
-    //TODO: Ändra arraylistans mottagande objekt-typ
-    private void setMap(String key,ArrayList<Object> val){
-        hm.put(key, val);
-    }
-    
-    private HashMap<String, ArrayList<Object>> getMap(){
-        return hm;
+    public String getStyleSheetPath() {
+        return this.styleSheetPath;
     }
 }

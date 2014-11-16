@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package views.partial;
 
 /**
  *
- * @author h11jafva
+ * @author Jeff
  */
-public class OrderStatusServlet extends View {
+public class FooterPartialView extends PartialView {
 
     @Override
     public String getHtml() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String html = "<footer>I'm a footer, scratch me, I'm itchy</footer>";
+        return html;
     }
 }

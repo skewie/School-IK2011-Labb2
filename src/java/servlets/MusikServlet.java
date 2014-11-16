@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import views.MusikView;
+import views.ViewBuilder;
 
 /**
  *
@@ -31,12 +32,10 @@ public class MusikServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        MusikView mv = new MusikView();
         
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-            out.println(mv.getHtml());
+            out.println(new ViewBuilder().buildPage(new MusikView("./styles/musicservlet.css")));
         }
     }
 
