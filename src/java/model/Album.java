@@ -18,6 +18,7 @@ public class Album {
     private int trackCount;
     private double price;
     private int stockCount;
+    private int recordingId;
 
     public long getId() {
         return id;
@@ -75,6 +76,14 @@ public class Album {
         this.price = price;
     }
 
+    public int getRecordingId(){
+        return this.recordingId;
+    }
+    
+    public void setRecordingId(int id){
+        this.recordingId = id;
+    }
+    
     public int getStockCount() {
         return stockCount;
     }

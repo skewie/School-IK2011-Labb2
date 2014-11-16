@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Album;
+import model.Kategori;
+import model.Låt;
 
 /**
  *
@@ -56,20 +58,53 @@ public class DBConnector {
         //kallar på lagrad procedur
         try{
             //TODO: procedure är inte skapad i databas än!!
+             /* --query--
+                SELECT * 
+                FROM music_recordings 
+                WHERE category IN(
+                        SELECT name 
+                        FROM music_categories 
+                        WHERE id = p_categoryId);
+            */
             CallableStatement stmt = con.prepareCall("{ call musicsite_p_getCategoryAlbums('" + categoryId + "') }");
             stmt.executeQuery();
             ResultSet rs = stmt.getResultSet();
             while(rs.next()){
                 Album album = new Album();
-                album.setArtist(rs.getString("recording_id"));
-                album.setTitle(rs.getString("artist_name"));
+                album.setArtist(rs.getString("artist_name"));
                 album.setCategory(rs.getString("category"));
                 album.setImageFileName(rs.getString("image_name"));
                 album.setTrackCount(rs.getInt("num_tracks"));
                 album.setPrice(rs.getInt("price"));
+                album.setRecordingId(rs.getInt("recording_id"));
                 album.setStockCount(rs.getInt("stock_count"));
+                album.setTitle(rs.getString("title"));
                 //lägger till album till arraylist
                 list.add(album);
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+   
+    //TODO: INTE KLAR!! Ska läggas till procedur
+    public ArrayList<Kategori> queryGetCategories(){
+        /*
+        --query--
+        SELECT *
+        FROM music_categories;
+        */
+        ArrayList<Kategori> list = new ArrayList<>();
+        try{
+            CallableStatement stmt = con.prepareCall("{ musicsite_p_getCategories() }");
+            stmt.executeQuery();
+            ResultSet rs = stmt.getResultSet();
+            while(rs.next()){
+                Kategori kat = new Kategori();
+                kat.setId(rs.getInt("id"));
+                kat.setName(rs.getString("name"));
+                list.add(kat);
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -77,27 +112,33 @@ public class DBConnector {
         return list;
     }
     
-    public ArrayList<Album> queryAllAlbums(){
-        ArrayList<Album> list = new ArrayList<>();
+    //TODO: INTE KLAR!! Ska läggas till procedur
+    public ArrayList<Låt> queryGetAlbumTracks(int recording_id){
+        /*
+        --query--
+        SELECT * 
+        FROM music_tracks 
+        WHERE recording_id = p_recording_id;
+        */
+        ArrayList<Låt> list = new ArrayList<>();
         try{
-            CallableStatement stmt = con.prepareCall("{ call musicsite_p_getAllAlbums() }");
+            CallableStatement stmt = con.prepareCall("{ musicsite_p_getAlbumTracks('" + recording_id + "') }");
             stmt.executeQuery();
             ResultSet rs = stmt.getResultSet();
             while(rs.next()){
-                Album album = new Album();
-                album.setArtist(rs.getString("recording_id"));
-                album.setTitle(rs.getString("artist_name"));
-                album.setCategory(rs.getString("category"));
-                album.setImageFileName(rs.getString("image_name"));
-                album.setTrackCount(rs.getInt("num_tracks"));
-                album.setPrice(rs.getInt("price"));
-                album.setStockCount(rs.getInt("stock_count"));
-                //lägger till album till arraylist
-                list.add(album);
+                Låt låt = new Låt();
+                låt.setId(rs.getInt("id"));
+                låt.setTitle(rs.getString("title"));
+                låt.setRecordingId(rs.getInt("recording_id"));
+                låt.setDuration(rs.getLong("duration"));
+                list.add(låt);
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
         return list;
     }
+    
+    
+    
 }
