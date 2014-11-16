@@ -27,10 +27,10 @@ public class DBConnector {
     private Connection con = null;
     
     public DBConnector(){
-        connectToDB();
+        connect();
     }
     
-    private void connectToDB(){
+    private void connect(){
         try{
             Class.forName("com.mysql.jdbc.Driver"); //driver
             String url = "jdbc:mysql://jval.synology.me.phpMyAdmin/ik2011_labb2"; //server/db
