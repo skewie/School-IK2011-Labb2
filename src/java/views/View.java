@@ -23,11 +23,11 @@ public abstract class View {
                 getFooter();
     }
     
-    public abstract String getHeader();
+    protected abstract String getHeader();
     
-    public abstract String getBody();
+    protected abstract String getBody();
     
-    public abstract String getFooter();
+    protected abstract String getFooter();
     
     public void setStyleSheet(String fileName) {
         this.styleSheetFileName = fileName;
