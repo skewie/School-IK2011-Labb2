@@ -11,7 +11,7 @@ import javax.servlet.ServletContext;
  *
  * @author h11jafva
  */
-public class DBConnector implements ServletContext {
+public class DBConnector {
     /*
     
         Klass som sköter om kommunikation mot databasen music_ik2011.
