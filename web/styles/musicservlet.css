@@ -29,8 +29,12 @@ and open the template in the editor.
     a{
         text-decoration: none;
     }
+    #content{
+        width: 90%;
+        height: 100%;
+    }
     table{
-        
+        margin-top: 20px;
     }
     td{
         padding: 5px;
