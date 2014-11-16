@@ -50,7 +50,7 @@ public class KategoriServlet extends HttpServlet {
             DBConnector dbc = (DBConnector)context.getAttribute("dbc");
             
             
-            dbc.queryAlbums(1);
+            dbc.queryCategoryAlbums(1);
             
         }
     }
