@@ -39,7 +39,7 @@ public abstract class View {
     }
     
     public String getStyleSheetLine() {
-        return "<link type=\"text/css\" rel=\"stylesheet\" href=\".../styles/"+ this.styleSheetFileName +"\"></link>";
+        return "<link type=\"text/css\" rel=\"stylesheet\" href=\"./styles/"+ this.styleSheetFileName +"\"/"+">";
     }
     
     //TODO: Ändra arraylistans mottagande objekt-typ
@@ -47,7 +47,7 @@ public abstract class View {
         hm.put(key, val);
     }
     
-    /*private HashMap<> getMap(){
-        
-    }*/
+    private HashMap<String, ArrayList<Object>> getMap(){
+        return hm;
+    }
 }
