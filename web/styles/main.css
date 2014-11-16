@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 16, 2014, 1:39:13 PM
+    Author     : h11tobbu
+*/
+/* mainpage stuff (index.html) */
+@media screen{
+    
+    body,html{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+    }
+    
+    a:hover{
+        color: red;
+    }
+    
+    a{
+        text-decoration: none;
+    }
+    #main_link{
+        width: 150px;
+        height: 50px;
+        text-align: center;
+        background: #DFECEE;
+        border-radius: 3px;
+        margin: auto;
+        margin-top: 250px;
+    }
+}
