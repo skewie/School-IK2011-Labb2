@@ -5,8 +5,10 @@
  */
 package servlets;
 
+import DAL.DBConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,15 @@ public class KategoriServlet extends HttpServlet {
             out.println("<h1>Servlet KategoriServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            
+            
+            ServletContext context = getServletContext();
+            
+            DBConnector dbc = (DBConnector)context.getAttribute("dbc");
+            
+            
+            dbc.queryAlbums(1);
+            
         }
     }
 

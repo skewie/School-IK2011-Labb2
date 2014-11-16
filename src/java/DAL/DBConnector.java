@@ -5,7 +5,8 @@
  */
 package DAL;
 
-import javax.servlet.ServletContext;
+import java.util.ArrayList;
+import model.Album;
 
 /**
  *
@@ -18,4 +19,8 @@ public class DBConnector {
         För att objektreferens till denna klass ska bli åtkomlig från alla servlets så skapas en applikationslyssnare.
     
     */
+    
+    public ArrayList<Album> queryAlbums(int categoryId) {
+        return new ArrayList<Album>();
+    }
 }
