@@ -5,11 +5,13 @@
  */
 package DAL;
 
+import javax.servlet.ServletContext;
+
 /**
  *
  * @author h11jafva
  */
-public class DBConnector {
+public class DBConnector implements ServletContext {
     /*
     
         Klass som sköter om kommunikation mot databasen music_ik2011.
