@@ -5,22 +5,27 @@
  */
 package views;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  *
  * @author h11jafva
  */
 public abstract class View {
     
+    private HashMap<String, ArrayList<Object>> hm; //TODO: Ändra arraylistans mottagande objekt-typ
     private final String DOCTYPE =  "<!DOCTYPE html>";
-    
     private String styleSheetFileName = "";
     
     public String getHtml() {
         return
                 DOCTYPE+"\n"+
+                "<html lang=\"se\">" +
                 getHeader()+"\n"+
                 getBody()+"\n"+
-                getFooter();
+                getFooter() +
+                "</html>";
     }
     
     protected abstract String getHeader();
@@ -36,4 +41,13 @@ public abstract class View {
     public String getStyleSheetLine() {
         return "<link type=\"text/css\" rel=\"stylesheet\" href=\".../styles/"+ this.styleSheetFileName +"\"></link>";
     }
+    
+    //TODO: Ändra arraylistans mottagande objekt-typ
+    private void setMap(String key,ArrayList<Object> val){
+        hm.put(key, val);
+    }
+    
+    /*private HashMap<> getMap(){
+        
+    }*/
 }

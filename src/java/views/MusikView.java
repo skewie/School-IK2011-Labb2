@@ -10,20 +10,42 @@ package views;
  * @author h11jafva
  */
 public class MusikView extends View {
-
-    @Override
-    public String getHeader() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public MusikView(){
+        
     }
 
     @Override
-    public String getBody() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected String getHeader() {
+        setStyleSheet("musicservlet.css");
+        String html = 
+                "<head>\n"+
+                getStyleSheetLine() + "\n" +
+                "</head>\n";
+        return html;
     }
 
     @Override
-    public String getFooter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected String getBody() {
+        String html = 
+                "<nav>\n" +
+"		<a href=\"../\"><< Back To Index</a>\n" +
+"	</nav>\n" +
+"	<section id=\"content\">\n" +
+"		<table id=\"music\">\n" +
+"			<th>\n" +
+"				Genrer\n" +
+"			</th>\n" +
+"		</table>\n" +
+"	</section>";
+        
+        return html;
+    }
+
+    @Override
+    protected String getFooter() {
+        String html = "<footer>I'm a footer, scratch me, I'm itchy</footer>";
+        return html;
     }
     
 }
