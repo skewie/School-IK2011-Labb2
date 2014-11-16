@@ -57,7 +57,6 @@ public class DBConnector {
         ArrayList<Album> list = new ArrayList<>();
         //kallar på lagrad procedur
         try{
-            //TODO: procedure är inte skapad i databas än!!
              /* --query--
                 SELECT * 
                 FROM music_recordings 
@@ -88,7 +87,6 @@ public class DBConnector {
         return list;
     }
    
-    //TODO: INTE KLAR!! Ska läggas till procedur
     public ArrayList<Kategori> queryGetCategories(){
         /*
         --query--
@@ -112,7 +110,6 @@ public class DBConnector {
         return list;
     }
     
-    //TODO: INTE KLAR!! Ska läggas till procedur
     public ArrayList<Låt> queryGetAlbumTracks(int recording_id){
         /*
         --query--
