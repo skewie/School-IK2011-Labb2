@@ -5,6 +5,8 @@
  */
 package DAL;
 
+import javax.servlet.ServletContext;
+
 /**
  *
  * @author h11jafva
