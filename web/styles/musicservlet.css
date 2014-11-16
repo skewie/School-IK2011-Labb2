@@ -35,6 +35,9 @@ and open the template in the editor.
     }
     table{
         margin-top: 20px;
+        width: auto;
+        height: auto;
+        margin: auto;
     }
     td{
         padding: 5px;
