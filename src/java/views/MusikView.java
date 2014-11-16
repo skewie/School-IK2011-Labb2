@@ -12,7 +12,7 @@ package views;
 public class MusikView extends View {
     
     public MusikView(){
-        
+       
     }
 
     @Override
