@@ -5,17 +5,23 @@
  */
 package views;
 
+import java.util.ArrayList;
+import model.Kategori;
+
 /**
  *
  * @author h11jafva
  */
 public class MusikView extends View {
     
-    public MusikView(){
-       
+    private ArrayList<Kategori> cats; // Mjau :)
+    
+    public MusikView(ArrayList<Kategori> categories){
+       this.cats = categories;
     }
     
-    public MusikView(String styleSheetPath) {
+    public MusikView(ArrayList<Kategori> categories, String styleSheetPath) {
+        this.cats = categories; // Mjau :D
         super.setStyleSheetPath(styleSheetPath);
     }
 
@@ -27,9 +33,17 @@ public class MusikView extends View {
             "	</nav>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
+            "           <tr>\n"+
             "           <th>\n" +
-            "               Genrer\n" +
-            "           </th>\n" +
+            "               Välj musikkategori:\n" +
+            "           </th>\n"+
+            "           </tr>\n";
+        
+        for (Kategori cat : this.cats) {
+            html = html+ "<tr><td><a href=\"#\">"+cat.getName()+"</a></td></tr>";
+        }
+        
+        html = html+
             "       </table>\n" +
             "	</section>";
         

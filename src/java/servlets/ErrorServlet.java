@@ -5,25 +5,18 @@
  */
 package servlets;
 
-import DAL.DBConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Kategori;
-import views.MusikView;
-import views.ViewBuilder;
 
 /**
  *
- * @author h11jafva
+ * @author Jeff
  */
-public class MusikServlet extends HttpServlet {
+public class ErrorServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,27 +29,55 @@ public class MusikServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = getServletConfig().getServletContext();
         
+        // TODO: Omvandla till ErrorView.
+        
+        // Analyze the servlet exception       
+        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+        String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
+        if (servletName == null) {
+            servletName = "Unknown";
+        }
+        String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
+        if (requestUri == null) {
+            requestUri = "Unknown";
+        }
+
+        // Set response content type
+        response.setContentType("text/html");
+
         PrintWriter out = response.getWriter();
-        
-        //out.println(context.getAttributeNames()+"<br><br>");
-        try {
-            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-            ArrayList<Kategori> cats = dbc.queryGetCategories(); // Mjau
-            out.println(new ViewBuilder(new MusikView(cats, "./styles/musicservlet.css")).buildPage());
-        } catch(Exception e) {
-            out.println("<b>Typ:</b><br>");
-            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+        String title = "Error/Exception Information";
+        String docType
+                = "<!doctype html public \"-//w3c//dtd html 4.0 "
+                + "transitional//en\">\n";
+        out.println(docType
+                + "<html>\n"
+                + "<head><title>" + title + "</title></head>\n"
+                + "<body bgcolor=\"#f0f0f0\">\n");
+
+        if (throwable == null && statusCode == null) {
+            out.println("<h2>Error information is missing</h2>");
+            out.println("Please return to the <a href=\""
+                    + response.encodeURL("http://localhost:8080/musicsite")
+                    + "\">Home Page</a>.");
+        } else if (throwable != null) {
+            out.println("<h2>Error information</h2>");
+            out.println("<b>Servlet Name:</b> " + servletName + "</br></br>");
+            out.println("<b>Request URI:</b> " + requestUri + "<br><br>");
+            out.println("<b>Exception Type:</b> " + throwable.getClass().getName() + "</br></br>");
+            out.println("<b>Exception message:</b> " + throwable.getMessage() + "<br><br>");
             out.println("<b>StackTrace:</b><br>");
-            for (StackTraceElement ste : e.getStackTrace()) {
+            
+            for (StackTraceElement ste : throwable.getStackTrace()) {
                 out.println(ste.toString()+"<br>");
             }
+        } else {
+            out.println("<b>Status code:</b> " + statusCode);
         }
-        
-        //out.println("<br><br>Attribut: <br>"+context.getAttribute(DBConnector.AttributeName).toString());
-        
+        out.println("</body>");
+        out.println("</html>");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

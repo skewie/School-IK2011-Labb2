@@ -19,14 +19,17 @@ public class ViewBuilder {
     private final ArrayList<String> styleSheetPaths = new ArrayList();
     private final ArrayList<View> views = new ArrayList();
     
-    public String buildPage(View view) {
-        
-        addStyleSheet(view.getStyleSheetPath());
+    
+    public ViewBuilder(View view) {
+        if (view.getStyleSheetPath() != null)
+            addStyleSheet(view.getStyleSheetPath());
         
         addPartialView(new HeaderPartialView());
         views.add(view);
         addPartialView(new FooterPartialView());
-        
+    }
+    
+    public String buildPage() {
         String html = View.DOCTYPE+"\n<html lang=\"se\">";
         html = html+buildHead();
         
@@ -68,11 +71,11 @@ public class ViewBuilder {
         return "";
     }
     
-    public void addStyleSheet(String pathToStyleSheet) {
+    public final void addStyleSheet(String pathToStyleSheet) {
         styleSheetPaths.add(pathToStyleSheet);
     }
     
-    public void addPartialView(PartialView view) {
+    public final void addPartialView(PartialView view) {
         views.add(view);
     }
 }

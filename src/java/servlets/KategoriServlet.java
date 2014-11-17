@@ -47,10 +47,8 @@ public class KategoriServlet extends HttpServlet {
             
             ServletContext context = getServletContext();
             
-            DBConnector dbc = (DBConnector)context.getAttribute("dbc");
+            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
             
-            
-            dbc.queryCategoryAlbums(1);
             
         }
     }

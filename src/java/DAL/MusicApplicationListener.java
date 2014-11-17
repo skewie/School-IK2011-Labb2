@@ -19,14 +19,23 @@ public class MusicApplicationListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
         
-        DBConnector dbc = new DBConnector();
-        
-        context.setAttribute("dbc", dbc);
+        try {
+            DBConnector dbc = new DBConnector();
+            context.setAttribute(DBConnector.AttributeName, dbc);
+        } catch (Exception e) {
+            context.log("FELMEDDELANDE: "+e.getClass()+": "+e.getMessage()+"\n"+e.getStackTrace()[0].getFileName()+" at method " + e.getStackTrace()[0].getMethodName());
+        }
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ServletContext context = sce.getServletContext();
+        try {
+            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+            dbc.disconnect();
+        } catch (Exception e) {
+            context.log("FELMEDDELANDE: "+e.getClass()+": "+e.getMessage()+"\n"+e.getStackTrace()[0].getFileName()+" at method " + e.getStackTrace()[0].getMethodName());
+        }
     }
     
 }

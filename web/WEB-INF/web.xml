@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <listener>
+        <listener-class>DAL.MusicApplicationListener</listener-class>
+    </listener>
+    
     <servlet>
         <servlet-name>MusikServlet</servlet-name>
         <servlet-class>servlets.MusikServlet</servlet-class>
@@ -15,6 +19,10 @@
     <servlet>
         <servlet-name>OrderStatusServlet</servlet-name>
         <servlet-class>servlets.OrderStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ErrorServlet</servlet-name>
+        <servlet-class>servlets.ErrorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MusikServlet</servlet-name>
@@ -32,14 +40,18 @@
         <servlet-name>OrderStatusServlet</servlet-name>
         <url-pattern>/OrderStatusServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ErrorServlet</servlet-name>
+        <url-pattern>/ErrorPage</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     
-    
-    <listener>
-        <listener-class>DAL.MusicApplicationListener</listener-class>
-    </listener>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type >
+        <location>/ErrorPage</location>
+    </error-page>
 </web-app>
