@@ -110,7 +110,7 @@ public class DBConnector {
         */
         ArrayList<Låt> list = new ArrayList<>();
         
-        CallableStatement stmt = con.prepareCall("{ musicsite_p_getAlbumTracks('" + recording_id + "') }");
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_getAlbumTracks('" + recording_id + "') }");
         stmt.executeQuery();
         ResultSet rs = stmt.getResultSet();
         while(rs.next()){
@@ -125,10 +125,29 @@ public class DBConnector {
         return list;
     }
 
+    //TODO: prosedur inte skapad än!!
+    public int queryLogin(String user, String passwd) throws SQLException{
+        /*
+        -- query --
+        SELECT user_name, user_pass
+        FROM users
+        WHERE user_name = p_username
+        AND
+        user_pass = p_userpass;
+        */
+        int check = 0;
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_login('" + user + "', '" + passwd + "') }");
+        stmt.executeQuery();
+        ResultSet rs = stmt.getResultSet();
+        while(rs.next()){
+            
+        }
+        return check;
+    }
+    
     @Override
     public String toString() {
         return "Testar"; //To change body of generated methods, choose Tools | Templates.
     }
-    
     
 }
