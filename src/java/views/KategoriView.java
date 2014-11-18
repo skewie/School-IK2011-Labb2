@@ -28,9 +28,9 @@ public class KategoriView extends View {
     @Override
     public String getHtml() {
         String html = 
-                "   <nav>\n" +
-            "       <a href=\"./MusikServlet\"><< Back To Index</a>\n" +
-            "	</nav>\n" +
+                "   <a href=\"./\"><nav>\n" +
+            "       << Back\n" +
+            "	</nav></a>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
             "           <tr>\n" +
@@ -63,7 +63,7 @@ public class KategoriView extends View {
                                     album.getArtist()+ "\n" +
                         "	</td>\n" +
                         "	<td>\n" +
-                                    album.getTitle() + "\n" +
+                                    "<a href=\"AlbumServlet?recid="+ album.getRecordingId() +"\">" + album.getTitle() + "</a>\n" +
                         "	</td>\n" +
                         "	<td>\n" +
                                     album.getCategory() + "\n" +

@@ -28,9 +28,9 @@ public class MusikView extends View {
     @Override
     public String getHtml() {
         String html = 
-            "   <nav>\n" +
-            "       <a href=\"./\"><< Back To Index</a>\n" +
-            "	</nav>\n" +
+            "   <a href=\"./\"><nav>\n" +
+            "       << Back\n" +
+            "	</nav></a>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
             "           <tr>\n"+
