@@ -41,7 +41,8 @@ public class KategoriServlet extends HttpServlet {
         try{
             DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
             // TEST - key 0-5
-            ArrayList<Album> album = dbc.queryCategoryAlbums(1); //nyckelvärdet som skickas med, ofta i form av name.
+            ArrayList<Album> album = dbc.queryCategoryAlbums(
+                Integer.parseInt(request.getParameter("catid"))); //nyckelvärdet som skickas med, ofta i form av name.
             out.println(new ViewBuilder(new KategoriView(album, "./styles/musicservlet.css")).buildPage("Album"));
             //END TEST
         }catch(Exception e){

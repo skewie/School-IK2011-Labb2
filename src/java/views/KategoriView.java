@@ -29,7 +29,7 @@ public class KategoriView extends View {
     public String getHtml() {
         String html = 
                 "   <nav>\n" +
-            "       <a href=\"../\"><< Back To Index</a>\n" +
+            "       <a href=\"./MusikServlet\"><< Back To Index</a>\n" +
             "	</nav>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
