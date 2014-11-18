@@ -43,7 +43,7 @@ public class KategoriServlet extends HttpServlet {
             // TEST - key 0-5
             ArrayList<Album> album = dbc.queryCategoryAlbums(
                 Integer.parseInt(request.getParameter("catid"))); //nyckelvärdet som skickas med, ofta i form av name.
-            out.println(new ViewBuilder(new KategoriView(album, "./styles/musicservlet.css")).buildPage("Album"));
+            out.println(new ViewBuilder(new KategoriView(album, "./styles/kategoriservlet.css")).buildPage("Album"));
             //END TEST
         }catch(Exception e){
             out.println("<b>Typ:</b><br>");
