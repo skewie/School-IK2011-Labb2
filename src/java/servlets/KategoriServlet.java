@@ -40,11 +40,9 @@ public class KategoriServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try{
             DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-            // TEST - key 0-5
             ArrayList<Album> album = dbc.queryCategoryAlbums(
                 Integer.parseInt(request.getParameter("catid"))); //nyckelvärdet som skickas med, ofta i form av name.
             out.println(new ViewBuilder(new KategoriView(album, "./styles/kategoriservlet.css")).buildPage("Album"));
-            //END TEST
         }catch(Exception e){
             out.println("<b>Typ:</b><br>");
             out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");

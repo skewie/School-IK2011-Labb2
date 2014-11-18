@@ -5,12 +5,19 @@
  */
 package servlets;
 
+import DAL.DBConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Låt;
+import views.AlbumView;
+import views.KategoriView;
+import views.ViewBuilder;
 
 /**
  *
@@ -30,17 +37,20 @@ public class AlbumServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AlbumServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AlbumServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        ServletContext context = getServletConfig().getServletContext();
+        PrintWriter out = response.getWriter();
+        try{
+            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+            ArrayList<Låt> låt = dbc.queryGetAlbumTracks(
+                Integer.parseInt(request.getParameter("recid")));
+            out.println(new ViewBuilder(new AlbumView(låt, "./styles/kategoriservlet.css")).buildPage("Album/Låtar"));
+        }catch(Exception e){
+            out.println("<b>Typ:</b><br>");
+            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+            out.println("<b>StackTrace:</b><br>");
+            for (StackTraceElement ste : e.getStackTrace()) {
+                out.println(ste.toString()+"<br>");
+            }
         }
     }
 
