@@ -42,7 +42,7 @@ public class KategoriServlet extends HttpServlet {
             DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
             // TEST - key 0-5
             ArrayList<Album> album = dbc.queryCategoryAlbums(1); //nyckelvärdet som skickas med, ofta i form av name.
-            out.println(new ViewBuilder(new KategoriView(album, "./styles/musicservlet.css")).buildPage("Albums"));
+            out.println(new ViewBuilder(new KategoriView(album, "./styles/musicservlet.css")).buildPage("Album"));
             //END TEST
         }catch(Exception e){
             out.println("<b>Typ:</b><br>");

@@ -22,6 +22,7 @@ public class KategoriView extends View {
     
     public KategoriView(ArrayList<Album> album, String styleSheetPath){
         this.albums = album;
+        super.setStyleSheetPath(styleSheetPath);
     }
 
     @Override
