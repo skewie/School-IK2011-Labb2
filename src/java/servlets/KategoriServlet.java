@@ -8,11 +8,15 @@ package servlets;
 import DAL.DBConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Album;
+import views.KategoriView;
+import views.ViewBuilder;
 
 /**
  *
@@ -32,24 +36,21 @@ public class KategoriServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet KategoriServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet KategoriServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            
-            
-            ServletContext context = getServletContext();
-            
+        ServletContext context = getServletConfig().getServletContext();
+        PrintWriter out = response.getWriter();
+        try{
             DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-            
-            
+            // TEST - key 0-5
+            ArrayList<Album> album = dbc.queryCategoryAlbums(1); //nyckelvärdet som skickas med, ofta i form av name.
+            out.println(new ViewBuilder(new KategoriView(album, "./styles/musicservlet.css")).buildPage("Albums"));
+            //END TEST
+        }catch(Exception e){
+            out.println("<b>Typ:</b><br>");
+            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+            out.println("<b>StackTrace:</b><br>");
+            for (StackTraceElement ste : e.getStackTrace()) {
+                out.println(ste.toString()+"<br>");
+            }
         }
     }
 
