@@ -29,7 +29,7 @@ public class MusikView extends View {
     public String getHtml() {
         String html = 
             "   <a href=\"./\"><nav>\n" +
-            "       << Back\n" +
+            "       <div><< Back</div>\n" +
             "	</nav></a>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
