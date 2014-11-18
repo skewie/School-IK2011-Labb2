@@ -29,9 +29,9 @@ public class ViewBuilder {
         addPartialView(new FooterPartialView());
     }
     
-    public String buildPage() {
+    public String buildPage(String title) {
         String html = View.DOCTYPE+"\n<html lang=\"se\">";
-        html = html+buildHead();
+        html = html+buildHead(title);
         
         for (View v : views) {
             html = html+v.getHtml();
@@ -41,11 +41,14 @@ public class ViewBuilder {
         return html;
     }
     
-    private String buildHead() {
+    private String buildHead(String title) {
         
         StringBuilder build = new StringBuilder();
         
         build.append("<head>\n");
+        build.append("<title>");
+        build.append(title);
+        build.append("</title>");
         build.append(printStyleSheetList());
         build.append(printScriptList());
         build.append("</head>\n");

@@ -45,7 +45,7 @@ public class MusikServlet extends HttpServlet {
         try {
             DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
             ArrayList<Kategori> cats = dbc.queryGetCategories(); // Mjau
-            out.println(new ViewBuilder(new MusikView(cats, "./styles/musicservlet.css")).buildPage());
+            out.println(new ViewBuilder(new MusikView(cats, "./styles/musicservlet.css")).buildPage("Kategori"));
         } catch(Exception e) {
             out.println("<b>Typ:</b><br>");
             out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");

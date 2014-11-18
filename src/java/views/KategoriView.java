@@ -14,15 +14,79 @@ import model.Album;
  */
 public class KategoriView extends View {
     
-    private ArrayList<Album> albums = null;
+    private ArrayList<Album> albums;
     
-    public KategoriView(ArrayList<Album> albums) {
-        this.albums = albums;
+    public KategoriView(ArrayList<Album> album) {
+        this.albums = album;
+    }
+    
+    public KategoriView(ArrayList<Album> album, String styleSheetPath){
+        this.albums = album;
     }
 
     @Override
     public String getHtml() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String html = 
+                "   <nav>\n" +
+            "       <a href=\"../\"><< Back To Index</a>\n" +
+            "	</nav>\n" +
+            "	<section id=\"content\">\n" +
+            "       <table id=\"music\">\n" +
+            "           <tr>\n" +
+                        "	<th>\n" +
+                        "		Artist\n" +
+                        "	</th>\n" +
+                        "	<th>\n" +
+                        "		Titel\n" +
+                        "	</th>\n" +
+                        "	<th>\n" +
+                        "		Kategori\n" +
+                        "	</th>\n" +
+                        "	<th>\n" +
+                        "		Bild\n" +
+                        "	</th>\n" +
+                        "	<th>\n" +
+                        "		# Låtar\n" +
+                        "	</th>\n" +
+                        "	<th>\n" +
+                        "		Pris\n" +
+                        "	</th>\n" +
+                        "	<th>\n" +
+                        "		Lager\n" +
+                        "	</th>\n" +
+                        "</tr>";
+        
+        for(Album album : this.albums){
+            html = html+ "<tr>\n" +
+                        "	<td>\n" +
+                                    album.getArtist()+ "\n" +
+                        "	</td>\n" +
+                        "	<td>\n" +
+                                    album.getTitle() + "\n" +
+                        "	</td>\n" +
+                        "	<td>\n" +
+                                    album.getCategory() + "\n" +
+                        "	</td>\n" +
+                        "	<td>\n" +
+                                    "<img src=\""+ album.getImageFileName() +"\"/>" + "\n" +
+                        "	</td>\n" +
+                        "	<td>\n" +
+                                    album.getTrackCount() + "\n" +
+                        "	</td>\n" +
+                        "	<td>\n" +
+                                    album.getPrice() + "\n" +
+                        "	</td>\n" +
+                        "	<td>\n" +
+                                    album.getStockCount() + "\n" +
+                        "	</td>\n" +
+                        "</tr>";
+        }
+        
+        html = html+
+            "       </table>\n" +
+            "	</section>";
+        
+        return html;
     }
     
     

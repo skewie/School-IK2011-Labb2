@@ -29,7 +29,7 @@ public class MusikView extends View {
     public String getHtml() {
         String html = 
             "   <nav>\n" +
-            "       <a href=\"../\"><< Back To Index</a>\n" +
+            "       <a href=\"./\"><< Back To Index</a>\n" +
             "	</nav>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
@@ -40,7 +40,7 @@ public class MusikView extends View {
             "           </tr>\n";
         
         for (Kategori cat : this.cats) {
-            html = html+ "<tr><td><a href=\"#\">"+cat.getName()+"</a></td></tr>";
+            html = html+ "<tr><td><a name=\""+ cat.getId() +"\" href=\"#"+ cat.getName() +"\">"+cat.getName()+"</a></td></tr>";
         }
         
         html = html+
