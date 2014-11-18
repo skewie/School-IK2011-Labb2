@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import model.Album;
 import model.Kategori;
 import model.Låt;
+import model.User;
 
 /**
  *
@@ -125,8 +126,14 @@ public class DBConnector {
         return list;
     }
 
-    //TODO: prosedur inte skapad än!!
-    public int queryLogin(String user, String passwd) throws SQLException{
+    
+    
+    ////////////////////////////////////////////////////////////////////////////
+    /////////// SAKER SOM INTE ÄR KLARA ÄN                           ///////////
+    ////////////////////////////////////////////////////////////////////////////
+    
+    //TODO: prosedur inte skapad än!! kräver även MD5 kryptering tror jag!
+    public int queryLogin(String username, String password) throws SQLException{
         /*
         -- query --
         SELECT user_name, user_pass
@@ -136,13 +143,34 @@ public class DBConnector {
         user_pass = p_userpass;
         */
         int check = 0;
-        CallableStatement stmt = con.prepareCall("{ call musicsite_p_login('" + user + "', '" + passwd + "') }");
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_login('" + username + "', '" + password + "') }");
+        stmt.executeQuery();
+        ResultSet rs = stmt.getResultSet();
+        //resultset returnerar 1 eller 0 beroende på om det kommer tillbaka
+        //ett svar som uppfyller queryn (select). 1 = finns, 0 = finns inte.
+        rs.last();
+        check = rs.getRow();
+        return check;
+    }
+    
+    //TODO: prosedur inte skapad än!! 
+    public User queryLoginGetUser(String username, String password) throws SQLException{
+        /*
+        -- query --
+            SELECT id, role_name, user_name
+            FROM user_roles
+            WHERE user_name = p_user_name;
+        */
+        User user = new User();
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_loginGetUser() }");
         stmt.executeQuery();
         ResultSet rs = stmt.getResultSet();
         while(rs.next()){
-            
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("user_name"));
+            user.setRole(rs.getString("role_name"));
         }
-        return check;
+        return user;
     }
     
     @Override
