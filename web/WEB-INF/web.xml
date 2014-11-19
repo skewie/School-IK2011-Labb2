@@ -3,6 +3,9 @@
     <listener>
         <listener-class>DAL.MusicApplicationListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>DAL.SessionListener</listener-class>
+    </listener>
     
     <servlet>
         <servlet-name>MusikServlet</servlet-name>

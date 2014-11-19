@@ -5,12 +5,14 @@
  */
 package servlets;
 
+import DAL.SessionListener;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,10 +37,14 @@ public class OrderStatusServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderStatusServlet</title>");            
+            out.println("<title>Kundkorg</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrderStatusServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Kundkorg</h1>");
+            //session test
+            HttpSession session = request.getSession();
+            out.println("Seesion Id: " + session.getId());
+            //end
             out.println("</body>");
             out.println("</html>");
         }
