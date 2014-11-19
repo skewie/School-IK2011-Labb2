@@ -59,7 +59,7 @@ public class KategoriView extends View {
         
         for(Album album : this.albums){
             html = html+ "<tr>\n" +
-                        "	<td>\n" +
+                        "	<td style=\"border-top-left-radius: 3px;border-bottom-left-radius: 3px;\">\n" +
                                     album.getArtist()+ "\n" +
                         "	</td>\n" +
                         "	<td>\n" +
@@ -79,11 +79,26 @@ public class KategoriView extends View {
                         "	</td>\n" +
                         "	<td>\n" +
                                     album.getStockCount() + "\n" +
-                        "	</td>\n" +
+                        "	</td>" +
+                        "       <td style=\"background: #BBFFBB;border-top-right-radius: 3px;border-bottom-right-radius: 3px;\">\n" +
+                        "           <a href=\"#nogo\">Lägg till i kundvagn</a> " +
+                        "       </td>\n" +
                         "</tr>";
         }
         
         html = html+
+            "<tr>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"background: #cecece;\">\n" +
+"		<a href=\"#nogo\">Till min kundvagn</a>\n" +
+"	</td>\n" +
+"</tr>"+
             "       </table>\n" +
             "	</section>";
         

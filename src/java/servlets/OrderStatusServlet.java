@@ -5,7 +5,6 @@
  */
 package servlets;
 
-import DAL.SessionListener;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author h11jafva
  */
-public class OrderStatusServlet extends HttpServlet {
+public class OrderStatusServlet extends HttpServlet{
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +40,8 @@ public class OrderStatusServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Kundkorg</h1>");
-            //session test
+            //session ska skapas när man lägger till saker i kundkorg
+            //ska förstöras när man beställt sina varor
             HttpSession session = request.getSession();
             out.println("Seesion Id: " + session.getId());
             //end

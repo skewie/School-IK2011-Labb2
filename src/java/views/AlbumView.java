@@ -47,8 +47,8 @@ public class AlbumView extends View {
                 ;
         
         for(Låt låt : this.låt){
-            html = html+ "<tr>\n" +
-                "	<td>\n" +
+            html = html+ "  <tr>\n" +
+                "	<td style=\"border-top-left-radius: 3px;border-bottom-left-radius: 3px;\">\n" +
                             låt.getId() + "\n" +
                 "	</td>\n" +
                 "	<td>\n" +
@@ -57,10 +57,21 @@ public class AlbumView extends View {
                 "	<td>\n" +
                             låt.getDuration() + "\n" +
                 "	</td>\n" +
-                "</tr>";
+                "       <td style=\"background: #BBFFBB;border-top-right-radius: 3px;border-bottom-right-radius: 3px;\">\n" +
+                "           <a href=\"#nogo\">Lägg till i kundvagn</a> " +
+                "       </td>\n" +
+                "   </tr>";
         }
         
         html = html+
+                            "<tr>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"background: #cecece;\">\n" +
+"		<a href=\"#nogo\">Till min kundvagn</a>\n" +
+"	</td>\n" +
+"</tr>"+
                 "       </table>\n" +
             "	</section>";
         
