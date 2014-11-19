@@ -125,12 +125,59 @@ public class DBConnector {
             
         return list;
     }
+    
+    public void queryAddCartSession(String session_id, String user_name) throws SQLException{
+        /*
+        -- query --
+                BEGIN
 
+                    DECLARE CheckExists INTEGER;
+                    SET CheckExists = 0;
+
+                    SELECT 1 INTO CheckExists
+                    FROM kundvagn
+                    WHERE session_id = p_session_id
+                    LIMIT 1;
+
+                    IF (CheckExists = 0) 
+                    THEN
+                        INSERT INTO kundvagn(session_id, user_name)
+                        VALUES(p_session_id, p_user_name);
+                    END IF;
+
+                END;
+        */
+        CallableStatement stmt = con.prepareCall(
+                "{ call musicsite_p_addCartSession('"+ session_id +"', '"+ user_name +"') }");
+        stmt.executeQuery();
+    }
     
     
     ////////////////////////////////////////////////////////////////////////////
     /////////// SAKER SOM INTE ÄR KLARA ÄN                           ///////////
     ////////////////////////////////////////////////////////////////////////////
+    
+    //TODO: prosedur saknas!! måste troligen ändras
+    public void queryAddAlbumToCart(String session_id, String recording_id, int amount) throws SQLException{
+        CallableStatement stmt = con.prepareCall(
+                "{ call musicsite_p_addAlbumToCart('"+ session_id +"', '"+ recording_id +"', '"+ amount +"') }");
+        stmt.executeQuery();
+    }
+    
+    //TODO: prosedure saknas!! måste troligen ändras
+    public ArrayList<Album> queryGetCart(String session_id, String user_name) throws SQLException{
+        ArrayList<Album> list = new ArrayList<>();
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_getCart('"+ session_id +"', '"+ user_name +"') }");
+        stmt.executeQuery();
+        ResultSet rs = stmt.getResultSet();
+        while(rs.next()){
+            Album album = new Album();
+            album.setArtist(rs.getString(1));
+            album.setTitle(rs.getString(2));
+            list.add(album);
+        }
+        return list;
+    }
     
     //TODO: prosedur inte skapad än!! kräver även MD5 kryptering tror jag!
     public int queryLogin(String username, String password) throws SQLException{

@@ -6,7 +6,9 @@
 package views;
 
 import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 import model.Album;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -96,7 +98,7 @@ public class KategoriView extends View {
 "	<td style=\"border: none\"></td>\n" +
 "	<td style=\"border: none\"></td>\n" +
 "	<td style=\"background: #cecece;\">\n" +
-"		<a href=\"#nogo\">Till min kundvagn</a>\n" +
+"		<a href=\"OrderStatusServlet\">Till min kundvagn</a>\n" +
 "	</td>\n" +
 "</tr>"+
             "       </table>\n" +

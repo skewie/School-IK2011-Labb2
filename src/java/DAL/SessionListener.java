@@ -17,14 +17,13 @@ public class SessionListener implements HttpSessionListener{
 
     private static int activeSessions;
     
-    public static int getActiveSessions(){
+    public static int getActiveSession(){
         return activeSessions;
     }
     
     
     @Override
     public void sessionDestroyed(HttpSessionEvent arg0){
-        arg0.getSession().invalidate();
         activeSessions--;
         System.out.println("Session destroyed! sessions now active: " + activeSessions);
     }

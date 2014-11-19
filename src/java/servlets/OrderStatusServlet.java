@@ -5,8 +5,11 @@
  */
 package servlets;
 
+import DAL.DBConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +34,17 @@ public class OrderStatusServlet extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        ServletContext context = getServletConfig().getServletContext();
+        DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            //Skapar tabell för kundvagnen om den inte finns med sessionsid och
+            //användarnamn
+            try{
+                dbc.queryAddCartSession(request.getSession().getId(), "bert");
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+                
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -42,8 +54,7 @@ public class OrderStatusServlet extends HttpServlet{
             out.println("<h1>Kundkorg</h1>");
             //session ska skapas när man lägger till saker i kundkorg
             //ska förstöras när man beställt sina varor
-            HttpSession session = request.getSession();
-            out.println("Seesion Id: " + session.getId());
+            
             //end
             out.println("</body>");
             out.println("</html>");
