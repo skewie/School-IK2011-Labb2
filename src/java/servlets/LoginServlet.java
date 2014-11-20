@@ -76,6 +76,9 @@ public class LoginServlet extends HttpServlet {
                     }
                 }catch(SQLException e){
                     System.out.println(e.getMessage());
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println(e.getMessage());
+                    response.sendRedirect("inloggningssida.html");
                 }
                 
                 
