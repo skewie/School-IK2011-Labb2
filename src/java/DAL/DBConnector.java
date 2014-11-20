@@ -194,7 +194,7 @@ public class DBConnector {
 
     
     //TODO: prosedur inte skapad än!! kräver även MD5 kryptering tror jag!
-    public int queryLogin(String username, String password) throws SQLException{
+    public ArrayList<String> queryLogin(String username, String password) throws SQLException{
         /*
         -- query --
         SELECT user_name, user_pass
@@ -203,15 +203,19 @@ public class DBConnector {
         AND
         user_pass = p_userpass;
         */
-        int check = 0;
+        ArrayList<String> list = new ArrayList<>();
         CallableStatement stmt = con.prepareCall("{ call musicsite_p_login('" + username + "', '" + password + "') }");
         stmt.executeQuery();
         ResultSet rs = stmt.getResultSet();
+        while(rs.next()){
+            list.add(rs.getString("user_name"));
+            list.add(rs.getString("user_pass"));
+        }
         //resultset returnerar 1 eller 0 beroende på om det kommer tillbaka
         //ett svar som uppfyller queryn (select). 1 = finns, 0 = finns inte.
-        rs.last();
-        check = rs.getRow();
-        return check;
+        //rs.last();
+        //check = rs.getRow();
+        return list;
     }
     
     //TODO: prosedur inte skapad än!! 
