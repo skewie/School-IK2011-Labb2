@@ -7,6 +7,7 @@ package servlets;
 
 import DAL.DBConnector;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,6 +47,8 @@ public class LoginServlet extends HttpServlet {
         
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
+        //System.out.println("USER: " + user);
+        //System.out.println("PASS: " + pass);
         
         
             try {
@@ -64,6 +68,8 @@ public class LoginServlet extends HttpServlet {
                     list = dbc.queryLogin(user, pass);
                     //kollar om MD5 och username är rätt eller ej
                     if(sb.toString().equals(list.get(1)) && user.equals(list.get(0))){ 
+                        HttpSession session = request.getSession();
+                        session.setAttribute("user", list.get(0));
                         response.sendRedirect("MusikServlet");
                     }else{
                         response.sendRedirect("inloggningssida.html");

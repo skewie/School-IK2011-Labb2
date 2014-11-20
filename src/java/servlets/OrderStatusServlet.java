@@ -38,78 +38,85 @@ public class OrderStatusServlet extends HttpServlet{
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        if(request.getSession().getAttribute("user") != null){
+            response.setContentType("text/html;charset=UTF-8");
         
-        ServletContext context = getServletConfig().getServletContext();
-        DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-        
-        //Kollar om session finns i DB, annars skapar ny
-        //Skapar tabell för kundvagnen om den inte finns med sessionsid och
-        //användarnamns
-        try{
-            dbc.queryAddCartSession(request.getSession().getId(), "bert");
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-        
-        //Denna metod dubbellagrar data i databases pga. sidan laddas om.
-        //borde läggas sepparat från Servlet men vet inte hur.
-        /*
-        try{
-            //amount är för nuvarande hårdkodat
-            dbc.queryAddAlbumToCart(request.getSession().getId(), Integer.parseInt(request.getParameter("recid")), 1); 
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-        */
-        
-        PrintWriter out = response.getWriter();
-        try{
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Kundkorg</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Kundkorg</h1>");
-            out.println("<a href=\"MusikServlet\" ><< Bakåt</a>");
-            out.println(i);
-            i++;
-            out.println("<table>");
+            ServletContext context = getServletConfig().getServletContext();
+            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+
+            //Kollar om session finns i DB, annars skapar ny
+            //Skapar tabell för kundvagnen om den inte finns med sessionsid och
+            //användarnamns
             try{
-                //test id: "9567d3ba6e8e7fc9e10cf766f51c"
-                //test id: "test"
-                //Det som ska användas egentligen: request.getSession().getId()
-                for(Album album : dbc.queryGetAlbumCart(request.getSession().getId())){
-                    out.println("<tr>");
-                    out.println("<td>Album</td>");
-                    out.println("<td>" + album.getArtist() + "</td>");
-                    out.println("<td>" + album.getTitle() + "</td>");
-                    out.println("<td>" + album.getStockCount() + "</td>");
-                    out.println("</tr>");
-                }
-                for(Låt låt : dbc.queryGetTrackCart(request.getSession().getId())){
-                    out.println("<tr>");
-                    out.println("<td>Låt(ar)</td>");
-                    out.println("<td>" + låt.getArtist() + "</td>");
-                    out.println("<td>" + låt.getTitle() + "</td>");
-                    out.println("<td>" + låt.getStock() + "</td>");
-                    out.println("</tr>");
-                }
+                dbc.queryAddCartSession(request.getSession().getId(), "bert");
             }catch(SQLException e){
-                out.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
-            out.println("</table>");
-            out.println("</body>");
-            out.println("</html>");
-        }catch(Exception e){
-            out.println("<b>Typ:</b><br>");
-            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
-            out.println("<b>StackTrace:</b><br>");
-            for (StackTraceElement ste : e.getStackTrace()) {
-                out.println(ste.toString()+"<br>");
+
+            //Denna metod dubbellagrar data i databases pga. sidan laddas om.
+            //borde läggas sepparat från Servlet men vet inte hur.
+            /*
+            try{
+                //amount är för nuvarande hårdkodat
+                dbc.queryAddAlbumToCart(request.getSession().getId(), Integer.parseInt(request.getParameter("recid")), 1); 
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
             }
+            */
+
+
+
+            PrintWriter out = response.getWriter();
+            try{
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Kundkorg</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Kundkorg</h1>");
+                out.println("<a href=\"MusikServlet\" ><< Bakåt</a>");
+                out.println(i);
+                i++;
+                out.println("<table>");
+                try{
+                    //test id: "9567d3ba6e8e7fc9e10cf766f51c"
+                    //test id: "test"
+                    //Det som ska användas egentligen: request.getSession().getId()
+                    for(Album album : dbc.queryGetAlbumCart(request.getSession().getId())){
+                        out.println("<tr>");
+                        out.println("<td>Album</td>");
+                        out.println("<td>" + album.getArtist() + "</td>");
+                        out.println("<td>" + album.getTitle() + "</td>");
+                        out.println("<td>" + album.getStockCount() + "</td>");
+                        out.println("</tr>");
+                    }
+                    for(Låt låt : dbc.queryGetTrackCart(request.getSession().getId())){
+                        out.println("<tr>");
+                        out.println("<td>Låt(ar)</td>");
+                        out.println("<td>" + låt.getArtist() + "</td>");
+                        out.println("<td>" + låt.getTitle() + "</td>");
+                        out.println("<td>" + låt.getStock() + "</td>");
+                        out.println("</tr>");
+                    }
+                }catch(SQLException e){
+                    out.println(e.getMessage());
+                }
+                out.println("</table>");
+                out.println("</body>");
+                out.println("</html>");
+            }catch(Exception e){
+                out.println("<b>Typ:</b><br>");
+                out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+                out.println("<b>StackTrace:</b><br>");
+                for (StackTraceElement ste : e.getStackTrace()) {
+                    out.println(ste.toString()+"<br>");
+                }
+            }
+        }else{
+            response.sendRedirect("inloggningssida.html");
         }
+        
         
     }
 

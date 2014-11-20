@@ -35,22 +35,27 @@ public class KategoriServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = getServletConfig().getServletContext();
-        PrintWriter out = response.getWriter();
-        try{
-            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-            ArrayList<Album> album = dbc.queryCategoryAlbums(
-                Integer.parseInt(request.getParameter("catid"))); //nyckelvärdet som skickas med, ofta i form av name.
-            out.println(new ViewBuilder(new KategoriView(album, "./styles/kategoriservlet.css")).buildPage("Album"));
-        }catch(Exception e){
-            out.println("<b>Typ:</b><br>");
-            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
-            out.println("<b>StackTrace:</b><br>");
-            for (StackTraceElement ste : e.getStackTrace()) {
-                out.println(ste.toString()+"<br>");
+        if(request.getSession().getAttribute("user") != null){
+            response.setContentType("text/html;charset=UTF-8");
+            ServletContext context = getServletConfig().getServletContext();
+            PrintWriter out = response.getWriter();
+            try{
+                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+                ArrayList<Album> album = dbc.queryCategoryAlbums(
+                    Integer.parseInt(request.getParameter("catid"))); //nyckelvärdet som skickas med, ofta i form av name.
+                out.println(new ViewBuilder(new KategoriView(album, "./styles/kategoriservlet.css")).buildPage("Album"));
+            }catch(Exception e){
+                out.println("<b>Typ:</b><br>");
+                out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+                out.println("<b>StackTrace:</b><br>");
+                for (StackTraceElement ste : e.getStackTrace()) {
+                    out.println(ste.toString()+"<br>");
+                }
             }
+        }else{
+            response.sendRedirect("inloggningssida.html");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

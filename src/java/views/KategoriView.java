@@ -30,9 +30,10 @@ public class KategoriView extends View {
     @Override
     public String getHtml() {
         String html = 
-                "   <a href=\"./MusikServlet\"><nav>\n" +
-            "       <div><< Back</div>\n" +
-            "	</nav></a>\n" +
+                "   <nav>\n" +
+            "       <a href=\"./MusikServlet\"><div><< Back</div></a>\n" +
+            "       <a href=\"LogoutServlet\"><div>Logga Ut</div></a>\n" +
+            "	</nav>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
             "           <tr>\n" +

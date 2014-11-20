@@ -36,26 +36,27 @@ public class MusikServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = getServletConfig().getServletContext();
-        
-        PrintWriter out = response.getWriter();
-        
-        //out.println(context.getAttributeNames()+"<br><br>");
-        try {
-            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-            ArrayList<Kategori> cats = dbc.queryGetCategories(); // Mjau
-            out.println(new ViewBuilder(new MusikView(cats, "./styles/musicservlet.css")).buildPage("Kategori"));
-        } catch(Exception e) {
-            out.println("<b>Typ:</b><br>");
-            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
-            out.println("<b>StackTrace:</b><br>");
-            for (StackTraceElement ste : e.getStackTrace()) {
-                out.println(ste.toString()+"<br>");
+        if(request.getSession().getAttribute("user") != null){
+            response.setContentType("text/html;charset=UTF-8");
+            ServletContext context = getServletConfig().getServletContext();
+
+            PrintWriter out = response.getWriter();
+            
+            try {
+                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+                ArrayList<Kategori> cats = dbc.queryGetCategories(); // Mjau
+                out.println(new ViewBuilder(new MusikView(cats, "./styles/musicservlet.css", request.getSession().getAttribute("user").toString())).buildPage("Kategori"));
+            } catch(Exception e) {
+                out.println("<b>Typ:</b><br>");
+                out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+                out.println("<b>StackTrace:</b><br>");
+                for (StackTraceElement ste : e.getStackTrace()) {
+                    out.println(ste.toString()+"<br>");
+                }
             }
+        }else{
+            response.sendRedirect("inloggningssida.html");
         }
-        
-        //out.println("<br><br>Attribut: <br>"+context.getAttribute(DBConnector.AttributeName).toString());
         
     }
 

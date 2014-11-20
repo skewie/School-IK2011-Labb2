@@ -36,22 +36,27 @@ public class AlbumServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = getServletConfig().getServletContext();
-        PrintWriter out = response.getWriter();
-        try{
-            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-            ArrayList<Låt> låt = dbc.queryGetAlbumTracks(
-                Integer.parseInt(request.getParameter("recid")));
-            out.println(new ViewBuilder(new AlbumView(låt, "./styles/kategoriservlet.css")).buildPage("Album/Låtar"));
-        }catch(Exception e){
-            out.println("<b>Typ:</b><br>");
-            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
-            out.println("<b>StackTrace:</b><br>");
-            for (StackTraceElement ste : e.getStackTrace()) {
-                out.println(ste.toString()+"<br>");
+        if(request.getSession().getAttribute("user") != null){
+            response.setContentType("text/html;charset=UTF-8");
+            ServletContext context = getServletConfig().getServletContext();
+            PrintWriter out = response.getWriter();
+            try{
+                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+                ArrayList<Låt> låt = dbc.queryGetAlbumTracks(
+                    Integer.parseInt(request.getParameter("recid")));
+                out.println(new ViewBuilder(new AlbumView(låt, "./styles/kategoriservlet.css")).buildPage("Album/Låtar"));
+            }catch(Exception e){
+                out.println("<b>Typ:</b><br>");
+                out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+                out.println("<b>StackTrace:</b><br>");
+                for (StackTraceElement ste : e.getStackTrace()) {
+                    out.println(ste.toString()+"<br>");
+                }
             }
+        }else{
+            response.sendRedirect("inloggningssida.html");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

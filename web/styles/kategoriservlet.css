@@ -31,6 +31,9 @@ and open the template in the editor.
     }
     nav div{
         padding-top: 8px;
+        float: left;
+        margin-right: 20px;
+        margin-left: 30%;
     }
     h1{
         background: #C5D2D5;
