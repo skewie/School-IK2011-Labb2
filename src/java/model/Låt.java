@@ -14,6 +14,8 @@ public class Låt {
     private int recording_id;
     private long duration;
     private String title;
+    private int stock;
+    private String artist;
 
     public long getId() {
         return id;
@@ -45,6 +47,22 @@ public class Låt {
     
     public void setDuration(long duration){
         this.duration = duration;
+    }
+    
+    public int getStock(){
+        return this.stock;
+    }
+    
+    public void setStock(int stock){
+        this.stock = stock;
+    }
+    
+    public String getArtist(){
+        return this.artist;
+    }
+    
+    public void setArtist(String artist){
+        this.artist = artist;
     }
     
 }

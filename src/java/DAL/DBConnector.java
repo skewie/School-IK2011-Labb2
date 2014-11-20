@@ -152,6 +152,36 @@ public class DBConnector {
         stmt.executeQuery();
     }
     
+    public ArrayList<Album> queryGetAlbumCart(String session_id) throws SQLException{
+        ArrayList<Album> list = new ArrayList<>();
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_getAlbumCart('"+ session_id +"') }");
+        stmt.executeQuery();
+        ResultSet rs = stmt.getResultSet();
+        while(rs.next()){
+            Album album = new Album();
+            album.setArtist(rs.getString(1));
+            album.setTitle(rs.getString(2));
+            album.setStockCount(rs.getInt(3));
+            list.add(album);
+        }
+        return list;
+    }
+    
+    public ArrayList<Låt> queryGetTrackCart(String session_id) throws SQLException{
+        ArrayList<Låt> list = new ArrayList<>();
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_getTrackCart('"+ session_id +"') }");
+        stmt.executeQuery();
+        ResultSet rs = stmt.getResultSet();
+        while(rs.next()){
+            Låt låt = new Låt();
+            låt.setArtist(rs.getString(1));
+            låt.setTitle(rs.getString(2));
+            låt.setStock(rs.getInt(3));
+            list.add(låt);
+        }
+        return list;
+    }
+    
     
     ////////////////////////////////////////////////////////////////////////////
     /////////// SAKER SOM INTE ÄR KLARA ÄN                           ///////////
@@ -162,21 +192,6 @@ public class DBConnector {
         CallableStatement stmt = con.prepareCall(
                 "{ call musicsite_p_addAlbumToCart('"+ session_id +"', '"+ recording_id +"', '"+ amount +"') }");
         stmt.executeQuery();
-    }
-    
-    //TODO: prosedure saknas!! måste troligen ändras
-    public ArrayList<Album> queryGetCart(String session_id, String user_name) throws SQLException{
-        ArrayList<Album> list = new ArrayList<>();
-        CallableStatement stmt = con.prepareCall("{ call musicsite_p_getCart('"+ session_id +"', '"+ user_name +"') }");
-        stmt.executeQuery();
-        ResultSet rs = stmt.getResultSet();
-        while(rs.next()){
-            Album album = new Album();
-            album.setArtist(rs.getString(1));
-            album.setTitle(rs.getString(2));
-            list.add(album);
-        }
-        return list;
     }
     
     //TODO: prosedur inte skapad än!! kräver även MD5 kryptering tror jag!

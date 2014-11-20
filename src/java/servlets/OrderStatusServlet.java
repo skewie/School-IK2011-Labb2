@@ -9,12 +9,15 @@ import DAL.DBConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Album;
 import javax.servlet.http.HttpSession;
+import model.Låt;
 
 /**
  *
@@ -54,7 +57,30 @@ public class OrderStatusServlet extends HttpServlet{
             out.println("<h1>Kundkorg</h1>");
             //session ska skapas när man lägger till saker i kundkorg
             //ska förstöras när man beställt sina varor
-            
+            out.println("<table>");
+            try{
+                //test id: "9567d3ba6e8e7fc9e10cf766f51c"
+                //Det som ska användas egentligen: request.getSession().getId()
+                for(Album album : dbc.queryGetAlbumCart("9567d3ba6e8e7fc9e10cf766f51c")){ 
+                    out.println("<tr>");
+                    out.println("<td>Album</td>");
+                    out.println("<td>" + album.getArtist() + "</td>");
+                    out.println("<td>" + album.getTitle() + "</td>");
+                    out.println("<td>" + album.getStockCount() + "</td>");
+                    out.println("</tr>");
+                }
+                for(Låt låt : dbc.queryGetTrackCart("9567d3ba6e8e7fc9e10cf766f51c")){
+                    out.println("<tr>");
+                    out.println("<td>Låt(ar)</td>");
+                    out.println("<td>" + låt.getArtist() + "</td>");
+                    out.println("<td>" + låt.getTitle() + "</td>");
+                    out.println("<td>" + låt.getStock() + "</td>");
+                    out.println("</tr>");
+                }
+            }catch(SQLException e){
+                out.println(e.getMessage());
+            }
+            out.println("</table>");
             //end
             out.println("</body>");
             out.println("</html>");
