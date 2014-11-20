@@ -9,14 +9,12 @@ import DAL.DBConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Album;
-import javax.servlet.http.HttpSession;
 import model.Låt;
 
 /**
@@ -25,6 +23,10 @@ import model.Låt;
  */
 public class OrderStatusServlet extends HttpServlet{
 
+    
+    int i = 0;
+    //private String recid = "";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,17 +39,32 @@ public class OrderStatusServlet extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         ServletContext context = getServletConfig().getServletContext();
         DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-        try (PrintWriter out = response.getWriter()) {
-            //Skapar tabell för kundvagnen om den inte finns med sessionsid och
-            //användarnamn
-            try{
-                dbc.queryAddCartSession(request.getSession().getId(), "bert");
-            }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-                
+        
+        //Kollar om session finns i DB, annars skapar ny
+        //Skapar tabell för kundvagnen om den inte finns med sessionsid och
+        //användarnamns
+        try{
+            dbc.queryAddCartSession(request.getSession().getId(), "bert");
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        
+        //Denna metod dubbellagrar data i databases pga. sidan laddas om.
+        //borde läggas sepparat från Servlet men vet inte hur.
+        /*
+        try{
+            //amount är för nuvarande hårdkodat
+            dbc.queryAddAlbumToCart(request.getSession().getId(), Integer.parseInt(request.getParameter("recid")), 1); 
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        */
+        
+        PrintWriter out = response.getWriter();
+        try{
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -55,13 +72,15 @@ public class OrderStatusServlet extends HttpServlet{
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Kundkorg</h1>");
-            //session ska skapas när man lägger till saker i kundkorg
-            //ska förstöras när man beställt sina varor
+            out.println("<a href=\"MusikServlet\" ><< Bakåt</a>");
+            out.println(i);
+            i++;
             out.println("<table>");
             try{
                 //test id: "9567d3ba6e8e7fc9e10cf766f51c"
+                //test id: "test"
                 //Det som ska användas egentligen: request.getSession().getId()
-                for(Album album : dbc.queryGetAlbumCart("9567d3ba6e8e7fc9e10cf766f51c")){ 
+                for(Album album : dbc.queryGetAlbumCart(request.getSession().getId())){
                     out.println("<tr>");
                     out.println("<td>Album</td>");
                     out.println("<td>" + album.getArtist() + "</td>");
@@ -69,7 +88,7 @@ public class OrderStatusServlet extends HttpServlet{
                     out.println("<td>" + album.getStockCount() + "</td>");
                     out.println("</tr>");
                 }
-                for(Låt låt : dbc.queryGetTrackCart("9567d3ba6e8e7fc9e10cf766f51c")){
+                for(Låt låt : dbc.queryGetTrackCart(request.getSession().getId())){
                     out.println("<tr>");
                     out.println("<td>Låt(ar)</td>");
                     out.println("<td>" + låt.getArtist() + "</td>");
@@ -81,10 +100,17 @@ public class OrderStatusServlet extends HttpServlet{
                 out.println(e.getMessage());
             }
             out.println("</table>");
-            //end
             out.println("</body>");
             out.println("</html>");
+        }catch(Exception e){
+            out.println("<b>Typ:</b><br>");
+            out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");
+            out.println("<b>StackTrace:</b><br>");
+            for (StackTraceElement ste : e.getStackTrace()) {
+                out.println(ste.toString()+"<br>");
+            }
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

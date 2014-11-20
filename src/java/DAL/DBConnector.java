@@ -182,17 +182,16 @@ public class DBConnector {
         return list;
     }
     
-    
-    ////////////////////////////////////////////////////////////////////////////
-    /////////// SAKER SOM INTE ÄR KLARA ÄN                           ///////////
-    ////////////////////////////////////////////////////////////////////////////
-    
-    //TODO: prosedur saknas!! måste troligen ändras
-    public void queryAddAlbumToCart(String session_id, String recording_id, int amount) throws SQLException{
+    public void queryAddAlbumToCart(String session_id, int recording_id, int amount) throws SQLException{
         CallableStatement stmt = con.prepareCall(
                 "{ call musicsite_p_addAlbumToCart('"+ session_id +"', '"+ recording_id +"', '"+ amount +"') }");
         stmt.executeQuery();
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    /////////// SAKER SOM INTE ÄR KLARA ÄN                           ///////////
+    ////////////////////////////////////////////////////////////////////////////
+
     
     //TODO: prosedur inte skapad än!! kräver även MD5 kryptering tror jag!
     public int queryLogin(String username, String password) throws SQLException{

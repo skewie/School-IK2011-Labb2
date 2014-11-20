@@ -83,7 +83,7 @@ public class KategoriView extends View {
                                     album.getStockCount() + "\n" +
                         "	</td>" +
                         "       <td style=\"background: #BBFFBB;border-top-right-radius: 3px;border-bottom-right-radius: 3px;\">\n" +
-                        "           <a href=\"#nogo\">Lägg till i kundvagn</a> " +
+                        "           <a href=\"OrderStatusServlet?recid="+album.getRecordingId()+"\">Lägg till i kundvagn</a> " +
                         "       </td>\n" +
                         "</tr>";
         }
