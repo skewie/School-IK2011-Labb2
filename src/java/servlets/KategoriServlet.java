@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Album;
 import views.KategoriView;
+import views.MusikView;
 import views.ViewBuilder;
 
 /**
@@ -40,10 +41,13 @@ public class KategoriServlet extends HttpServlet {
             ServletContext context = getServletConfig().getServletContext();
             PrintWriter out = response.getWriter();
             try{
-                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-                ArrayList<Album> album = dbc.queryCategoryAlbums(
+                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.ATTRIBUTE_NAME);
+                ArrayList<Album> albums = dbc.queryCategoryAlbums(
                     Integer.parseInt(request.getParameter("catid"))); //nyckelvärdet som skickas med, ofta i form av name.
-                out.println(new ViewBuilder(new KategoriView(album, "./styles/kategoriservlet.css")).buildPage("Album"));
+                
+                KategoriView view = new KategoriView(albums, "./styles/musicservlet.css");
+                
+                out.println(new ViewBuilder(view, request.getSession()).buildPage("Kategori/Album"));
             }catch(Exception e){
                 out.println("<b>Typ:</b><br>");
                 out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");

@@ -12,11 +12,15 @@ package views.partial;
 public class HeaderPartialView extends PartialView {
     
     private String userName = null;
+    private int cartRows = 0;
     
     public HeaderPartialView(String userName) {
-        
         this.userName = userName;
-        
+    }
+    
+    public HeaderPartialView(String userName, int cartRows) {
+        this.userName = userName;
+        this.cartRows = cartRows;
     }
 
     public HeaderPartialView() {
@@ -24,9 +28,22 @@ public class HeaderPartialView extends PartialView {
 
     @Override
     public String getHtml() {
+        
+        String html = "";
+        
         if (this.userName == null)
-            return "<h1>Välkommen till MusicSite!</h1>";
+            html = "<h1>Välkommen till MusicSite!</h1>\n";
         else
-            return "<h1>Välkommen till MusicSite, "+this.userName+"!</h1>";
+            html = "<h1>Välkommen till MusicSite, "+this.userName+"!</h1>\n";
+        
+        
+        String cartString = (cartRows == 0) ? "tom" :
+                            (cartRows > 1) ? String.valueOf(cartRows)+" varor" : String.valueOf(cartRows)+" vara";
+        
+        return html+
+            "   <nav>\n" +
+            "       <a href=\"LogoutServlet\"><div>Logga Ut</div></a>\n" +
+            "       <a href=\"OrderStatusServlet\"><div>Till kundvagnen ("+cartString+")</div></a>\n" +
+            "	</nav>\n";
     }
 }

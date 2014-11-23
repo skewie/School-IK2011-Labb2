@@ -26,7 +26,7 @@ public class DBConnector {
         För att objektreferens till denna klass ska bli åtkomlig från alla 
         servlets så skapas en applikationslyssnare.
     */
-    public static String AttributeName = "MusicSite.DAL.DBConnector";
+    public static String ATTRIBUTE_NAME = "MusicSite.DAL.DBConnector";
     
     private Connection con = null;
     
@@ -81,6 +81,34 @@ public class DBConnector {
         }
         return list;
     }
+    
+    /**
+     * Hämtar ett album och dess info.
+     * 
+     * @param recordingId
+     * @return
+     * @throws SQLException 
+     */
+    public Album queryAlbum(int recordingId) throws SQLException {
+        
+        CallableStatement stmt = con.prepareCall("{ call musicsite_p_getAlbum('" + recordingId + "') }");
+        stmt.executeQuery();
+        ResultSet rs = stmt.getResultSet();
+        Album album = new Album();
+        while(rs.next()) {
+            
+            album.setArtist(rs.getString("artist_name"));
+            album.setCategory(rs.getString("category"));
+            album.setImageFileName(rs.getString("image_name"));
+            album.setTrackCount(rs.getInt("num_tracks"));
+            album.setPrice(rs.getInt("price"));
+            album.setRecordingId(rs.getInt("recording_id"));
+            album.setStockCount(rs.getInt("stock_count"));
+            album.setTitle(rs.getString("title"));
+            //lägger till album till arraylist
+        }
+        return album;
+    }
    
     public ArrayList<Kategori> queryGetCategories() throws SQLException {
         /*
@@ -102,7 +130,7 @@ public class DBConnector {
         return list;
     }
     
-    public ArrayList<Låt> queryGetAlbumTracks(int recording_id) throws SQLException {
+    public ArrayList<Låt> queryAlbumTracks(int recording_id) throws SQLException {
         /*
         --query--
         SELECT * 

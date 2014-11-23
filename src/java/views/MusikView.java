@@ -15,25 +15,19 @@ import model.Kategori;
 public class MusikView extends View {
     
     private ArrayList<Kategori> cats; // Mjau :)
-    private String user;
     
     public MusikView(ArrayList<Kategori> categories){
        this.cats = categories;
     }
     
-    public MusikView(ArrayList<Kategori> categories, String styleSheetPath, String user) {
+    public MusikView(ArrayList<Kategori> categories, String styleSheetPath) {
         this.cats = categories; // Mjau :D
-        this.user = user;
         super.setStyleSheetPath(styleSheetPath);
     }
 
     @Override
     public String getHtml() {
         String html = 
-            "   <nav>\n" +
-            "       <a href=\"LogoutServlet\"><div>Logga Ut</div></a>\n" +
-            "	</nav>\n" +
-                "Inloggad som: " + user +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
             "           <tr>\n"+

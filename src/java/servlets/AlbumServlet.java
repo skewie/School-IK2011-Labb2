@@ -41,10 +41,13 @@ public class AlbumServlet extends HttpServlet {
             ServletContext context = getServletConfig().getServletContext();
             PrintWriter out = response.getWriter();
             try{
-                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
-                ArrayList<Låt> låt = dbc.queryGetAlbumTracks(
+                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.ATTRIBUTE_NAME);
+                ArrayList<Låt> songs = dbc.queryAlbumTracks(
                     Integer.parseInt(request.getParameter("recid")));
-                out.println(new ViewBuilder(new AlbumView(låt, "./styles/kategoriservlet.css")).buildPage("Album/Låtar"));
+                
+                AlbumView view = new AlbumView(songs, "./styles/musicservlet.css");
+                
+                out.println(new ViewBuilder(view, request.getSession()).buildPage("Album/Låtar"));
             }catch(Exception e){
                 out.println("<b>Typ:</b><br>");
                 out.println(e.getClass()+" - "+e.getMessage()+"<br><br>");

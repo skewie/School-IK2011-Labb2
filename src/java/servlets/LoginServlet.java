@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         ServletContext context = getServletConfig().getServletContext();
-        DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+        DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.ATTRIBUTE_NAME);
         
         String user = request.getParameter("username");
         String pass = request.getParameter("password");

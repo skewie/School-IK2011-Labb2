@@ -21,7 +21,7 @@ public class MusicApplicationListener implements ServletContextListener {
         
         try {
             DBConnector dbc = new DBConnector();
-            context.setAttribute(DBConnector.AttributeName, dbc);
+            context.setAttribute(DBConnector.ATTRIBUTE_NAME, dbc);
         } catch (Exception e) {
             context.log("FELMEDDELANDE: "+e.getClass()+": "+e.getMessage()+"\n"+e.getStackTrace()[0].getFileName()+" at method " + e.getStackTrace()[0].getMethodName());
         }
@@ -31,7 +31,7 @@ public class MusicApplicationListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
         try {
-            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.AttributeName);
+            DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.ATTRIBUTE_NAME);
             dbc.disconnect();
         } catch (Exception e) {
             context.log("FELMEDDELANDE: "+e.getClass()+": "+e.getMessage()+"\n"+e.getStackTrace()[0].getFileName()+" at method " + e.getStackTrace()[0].getMethodName());

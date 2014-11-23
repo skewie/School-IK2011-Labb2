@@ -5,31 +5,38 @@
  */
 package views;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
-import javax.servlet.http.HttpSession;
 import model.Album;
-import javax.servlet.http.HttpSession;
+import model.KundkorgsRad;
 
 /**
  *
  * @author h11jafva
  */
-public class KategoriView extends View {
+public class OrderStatusView extends View {
     
-    private ArrayList<Album> albums;
-    
-    public KategoriView(ArrayList<Album> album) {
-        this.albums = album;
-    }
-    
-    public KategoriView(ArrayList<Album> album, String styleSheetPath){
-        this.albums = album;
-        super.setStyleSheetPath(styleSheetPath);
+    private ArrayList<KundkorgsRad> cartRows = null;
+
+    public OrderStatusView() {
     }
 
+    public OrderStatusView(ArrayList<KundkorgsRad> cartRows) {
+        
+        this.cartRows = cartRows;
+    }
+    
+    public OrderStatusView(ArrayList<KundkorgsRad> cartRows, String styleSheetPath) {
+        
+        this.cartRows = cartRows;
+        super.setStyleSheetPath(styleSheetPath);
+        
+    }
+    
+    
     @Override
     public String getHtml() {
-        String html = 
+       String html = 
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
             "           <tr>\n" +
@@ -52,11 +59,17 @@ public class KategoriView extends View {
                         "		Pris\n" +
                         "	</th>\n" +
                         "	<th>\n" +
-                        "		Lager\n" +
+                        "		Antal\n" +
+                        "	</th>\n" +
+                        "	<th>\n" +
+                        "		Radsumma\n" +
                         "	</th>\n" +
                         "</tr>";
         
-        for(Album album : this.albums){
+        for(KundkorgsRad row : this.cartRows){
+            Album album = row.getAlbum();
+            
+            
             html = html+ "<tr>\n" +
                         "	<td style=\"border-top-left-radius: 3px;border-bottom-left-radius: 3px;\">\n" +
                                     album.getArtist()+ "\n" +
@@ -74,35 +87,23 @@ public class KategoriView extends View {
                                     album.getTrackCount() + "\n" +
                         "	</td>\n" +
                         "	<td>\n" +
-                                    album.getPrice() + "\n" +
+                                    NumberFormat.getCurrencyInstance().format(album.getPrice()) + "\n" +
                         "	</td>\n" +
                         "	<td>\n" +
-                                    album.getStockCount() + "\n" +
+                                    row.getAmount() + "\n" +
                         "	</td>" +
                         "       <td style=\"background: #BBFFBB;border-top-right-radius: 3px;border-bottom-right-radius: 3px;\">\n" +
-                        "           <a href=\"OrderStatusServlet?addItem="+album.getRecordingId()+"\">Lägg till i kundvagn</a> " +
+                                    NumberFormat.getCurrencyInstance().format(row.getAmount() * album.getPrice()) + "\n" +
                         "       </td>\n" +
                         "</tr>";
+                    
         }
         
         html = html+
-            "       <tr>\n" +
-                "	<td style=\"border: none\"></td>\n" +
-                "	<td style=\"border: none\"></td>\n" +
-                "	<td style=\"border: none\"></td>\n" +
-                "	<td style=\"border: none\"></td>\n" +
-                "	<td style=\"border: none\"></td>\n" +
-                "	<td style=\"border: none\"></td>\n" +
-                "	<td style=\"border: none\"></td>\n" +
-                "	<td style=\"background: #cecece;\">\n" +
-                "		<a href=\"OrderStatusServlet\">Till min kundvagn</a>\n" +
-                "	</td>\n" +
-            "       </tr>"+
+                    "<tr><td colspan=\"4\"></td><td>Summa: "+KundkorgsRad.getCartTotalPrice(cartRows)+"</td></tr>"+
             "   </table>\n" +
             "</section>";
         
         return html;
     }
-    
-    
 }

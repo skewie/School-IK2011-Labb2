@@ -28,10 +28,6 @@ public class AlbumView extends View {
     @Override
     public String getHtml() {
         String html = 
-                    "   <nav>\n" +
-            "       <a href=\"./MusikServlet\"><div><< Back</div></a>\n" +
-            "       <a href=\"LogoutServlet\"><div>Logga Ut</div></a>\n" +
-            "	</nav>\n" +
             "	<section id=\"content\">\n" +
             "       <table id=\"music\">\n" +
                 "<tr>\n" +
@@ -58,9 +54,6 @@ public class AlbumView extends View {
                 "	<td>\n" +
                             låt.getDuration() + "\n" +
                 "	</td>\n" +
-                "       <td style=\"background: #BBFFBB;border-top-right-radius: 3px;border-bottom-right-radius: 3px;\">\n" +
-                "           <a href=\"#nogo\">Lägg till i kundvagn</a> " +
-                "       </td>\n" +
                 "   </tr>";
         }
         
