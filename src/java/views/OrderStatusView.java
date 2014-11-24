@@ -66,6 +66,10 @@ public class OrderStatusView extends View {
                         "	</th>\n" +
                         "</tr>";
         
+       
+        if (cartRows == null) {
+            html += "<tr><td colspan=\"9\">Din kundvagn är tom.</td></tr>";
+        } else
         for(KundkorgsRad row : this.cartRows){
             Album album = row.getAlbum();
             
@@ -100,7 +104,7 @@ public class OrderStatusView extends View {
         }
         
         html = html+
-                    "<tr><td colspan=\"4\"></td><td>Summa: "+KundkorgsRad.getCartTotalPrice(cartRows)+"</td></tr>"+
+                    "<tr><td colspan=\"7\"></td><td>Summa: "+KundkorgsRad.getCartTotalPrice(cartRows)+"</td></tr>"+
             "   </table>\n" +
             "</section>";
         

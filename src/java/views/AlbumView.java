@@ -14,14 +14,16 @@ import model.Låt;
  */
 public class AlbumView extends View {
 
-    private ArrayList<Låt> låt;
-    
-    public AlbumView(ArrayList<Låt> låt) {
+    private ArrayList<Låt> låt = null;
+    private int recid = 0;
+    public AlbumView(ArrayList<Låt> låt, int recid) {
         this.låt = låt;
+        this.recid = recid;
     }
     
-    public AlbumView(ArrayList<Låt> låt, String styleSheetPath){
+    public AlbumView(ArrayList<Låt> låt, int recid, String styleSheetPath){
         this.låt = låt;
+        this.recid = recid;
         super.setStyleSheetPath(styleSheetPath);
     }
     
@@ -60,10 +62,10 @@ public class AlbumView extends View {
         html = html+
                             "<tr>\n" +
 "	<td style=\"border: none\"></td>\n" +
-"	<td style=\"border: none\"></td>\n" +
+"	<td style=\"background: #cecece;\"><a href=\"OrderStatusServlet?addItem="+this.recid+"\">Lägg till i kundvagn</a></td>\n" +
 "	<td style=\"border: none\"></td>\n" +
 "	<td style=\"background: #cecece;\">\n" +
-"		<a href=\"#nogo\">Till min kundvagn</a>\n" +
+"		<a href=\"OrderStatusServlet\">Till min kundvagn</a>\n" +
 "	</td>\n" +
 "</tr>"+
                 "       </table>\n" +

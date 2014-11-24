@@ -41,11 +41,12 @@ public class AlbumServlet extends HttpServlet {
             ServletContext context = getServletConfig().getServletContext();
             PrintWriter out = response.getWriter();
             try{
-                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.ATTRIBUTE_NAME);
-                ArrayList<Låt> songs = dbc.queryAlbumTracks(
-                    Integer.parseInt(request.getParameter("recid")));
+                int recid = Integer.parseInt(request.getParameter("recid"));
                 
-                AlbumView view = new AlbumView(songs, "./styles/musicservlet.css");
+                DBConnector dbc = (DBConnector)context.getAttribute(DBConnector.ATTRIBUTE_NAME);
+                ArrayList<Låt> songs = dbc.queryAlbumTracks(recid);
+                
+                AlbumView view = new AlbumView(songs, recid, "./styles/musicservlet.css");
                 
                 out.println(new ViewBuilder(view, request.getSession()).buildPage("Album/Låtar"));
             }catch(Exception e){

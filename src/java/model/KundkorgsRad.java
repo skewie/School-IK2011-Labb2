@@ -53,6 +53,8 @@ public class KundkorgsRad {
     public static int getCartTotalItems(ArrayList<KundkorgsRad> cart) {
         int tot = 0;
         
+        if (cart == null)
+            return tot;
         
         for (KundkorgsRad row : cart) {
             tot += row.getAmount();
@@ -64,6 +66,8 @@ public class KundkorgsRad {
     public static String getCartTotalPrice(ArrayList<KundkorgsRad> cart) {
         double tot = 0.0;
         
+        if (cart == null)
+            return NumberFormat.getCurrencyInstance().format(tot);
         
         for (KundkorgsRad row : cart) {
             tot += row.getAmount() * row.getAlbum().getPrice();

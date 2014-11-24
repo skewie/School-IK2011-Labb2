@@ -32,9 +32,9 @@ public class HeaderPartialView extends PartialView {
         String html = "";
         
         if (this.userName == null)
-            html = "<h1>Välkommen till MusicSite!</h1>\n";
+            html = "<h1><a href=\"MusikServlet\">Välkommen till MusicSite!</a></h1>\n";
         else
-            html = "<h1>Välkommen till MusicSite, "+this.userName+"!</h1>\n";
+            html = "<h1><a href=\"MusikServlet\">Välkommen till MusicSite, "+this.userName+"!</a></h1>\n";
         
         
         String cartString = (cartRows == 0) ? "tom" :
